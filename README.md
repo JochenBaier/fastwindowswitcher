@@ -21,13 +21,14 @@ It is optimized for fast keyboard usage.
 ## Installation
 
 Unzip  FastWindowSwitcher-xxxx.zip to any location. Run FastWindowSwitcher.exe.
-The default hot key to show the labels is Win-Y (optimized for a German keyboard layout). The hot key can be changed in the setting dialog. The settings dialog can be accessed by the tray icon context menu.
+The default hotkey to show the labels is Win-Y (optimized for a German keyboard layout). The hotkey can be changed in the setting dialog. The settings dialog can be accessed by the tray icon context menu.
 
-FastWindowSwitcher has no dependencies.
+[Help-Page](https://github.com/JochenBaier/fastwindowswitcher/wiki/Help)
 
 ## Hints
 
-For easy access of  taskbar buttons the taskbutton grouping should be turned off in the panel settings.
+- For easy access of  taskbar buttons the taskbutton grouping should be turned off in the panel settings.
+- If you want to start FastWindowSwichter with Windows create an shortcut to FastWindowSwitcher.exe inside the Autostart folder
 
 ## License
 
