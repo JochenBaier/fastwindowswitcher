@@ -1,0 +1,5 @@
+Used third party sourcecode/icons used in FastWindowSwitcher:
+
+Qt 5.9.x (GPL) (static build: qt\start_build_32_bit_static_debug_release_2015.bat)
+std::optional: https://raw.githubusercontent.com/akrzemi1/Optional/master/optional.hpp ( Boost Software License, Version 1.0)
+Trayicon: https://www.iconfinder.com/iconsets/snowish (GPL)
