@@ -20,8 +20,8 @@ It is optimized for fast keyboard usage.
 
 ## Installation
 
-Unzip  FastWindowSwitcher-xxxx.zip to any location. Run FastWindowSwitcher.exe
-The default hot key to show the labels is Win-Y (optimized for a German keyboard layout). The hot key can be changed in the setting dialog. The setting dialog can be accessed by the tray icon context menu.
+Unzip  FastWindowSwitcher-xxxx.zip to any location. Run FastWindowSwitcher.exe.
+The default hot key to show the labels is Win-Y (optimized for a German keyboard layout). The hot key can be changed in the setting dialog. The settings dialog can be accessed by the tray icon context menu.
 
 FastWindowSwitcher has no dependencies.
 
