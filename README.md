@@ -16,7 +16,7 @@ It is optimized for fast keyboard usage and can be used as an alternative for  A
 
 ## Download
 
-[Current Version 0.1.0.0](https://github.com/JochenBaier/fastwindowswitcher/blob/master/homepage/releases/FastWindowSwitcher-0100.zip)
+[Current Version 0.1.0.0](https://github.com/JochenBaier/fastwindowswitcher/releases/download/v0.1.0.0/FastWindowSwitcher-0100.zip)
 
 ## Installation
 
