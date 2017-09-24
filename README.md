@@ -1,3 +1,5 @@
+
+
 # FastWindowSwitcher
 
 A fast window switcher for Windows using the keyboard.
@@ -16,7 +18,7 @@ It is optimized for fast keyboard usage and can be used as an alternative for  A
 
 ## Download
 
-[Current Version 0.1.0.0](https://github.com/JochenBaier/fastwindowswitcher/releases/download/v0.1.0.0/FastWindowSwitcher-0100.zip)
+[Current Version 0.1.1.0](https://github.com/JochenBaier/fastwindowswitcher/releases/download/v0.1.1.0/FastWindowSwitcher-0110.zip)
 
 ## Installation
 
@@ -41,8 +43,18 @@ FastWindowSwitcher is released under the [GNU General Public License 3](https://
 
 ## Background/Similar programs
 
-FastWindowSwitcher is based on the idea of [vimfx](https://addons.mozilla.org/de/firefox/addon/vimfx/)/[Vimium](https://vimium.github.io/) browser plug-ins to use label to mark a location you want to go next.  During development i found [HerbiClicker](http://herbi.org/HerbiClicker/HerbiClicker.htm), but i was not able to get this program into a working state.
+FastWindowSwitcher is based on the idea of [vimfx](https://addons.mozilla.org/de/firefox/addon/vimfx/)/[Vimium](https://vimium.github.io/) browser plug-ins to use  a label to mark a location you want to go next.  During development i found [HerbiClicker](http://herbi.org/HerbiClicker/HerbiClicker.htm), but i was not able to get this program into a working state.
 
+## Reviews in english
 
+- softpedia.de: http://www.softpedia.com/get/Desktop-Enhancements/FastWindowSwitcher.shtml
+- ghacks.net: https://www.ghacks.net/2017/09/17/fastwindowswitcher-alt-tab-alternative-for-windows/
+- gotowebsites.info: http://www.gotowebsites.info/2017/09/fastwindowswitcher-tool-will-find-solution-windows-using-the-keyboard/
+- technewsdir.com: http://technewsdir.com/fastwindowswitcher-alt-tab-alternative-for-windows
+- Video (Breaking News 24/7): https://www.youtube.com/watch?v=5JTtnbjOaeM
 
+## Reviews in german
 
+- chip.de:  http://www.chip.de/downloads/FastWindowSwitcher_123246949.html
+- chip.de Video: http://www.chip.de/video/Mit-FastWindowSwitcher-pfeilschnell-ueber-den-Desktop-navigieren-Video_123257937.html
+- xcomputer.site: http://xcomputer.site/2017/09/18/fastwindowswitcher-alt-tab-alternative-fur-windows/
