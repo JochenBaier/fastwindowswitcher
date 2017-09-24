@@ -37,6 +37,7 @@ Programm erhalten haben.Wenn nicht, siehe < http://www.gnu.org/licenses/>.
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+#include "Shlobj.h"
 
 #include <QDebug>
 #include <QLibrary>
@@ -282,5 +283,13 @@ namespace FastWindowSwitcherLib
     {
       return GetSystemMetrics(p_index);
     }
+
+    const QString GetSystemX86Folder()
+    {
+      char system32Path[1024] = { 0 };
+      SHGetSpecialFolderPathA(0, system32Path, CSIDL_SYSTEMX86, false);
+      return QString(system32Path);
+    }
+
   }
 }

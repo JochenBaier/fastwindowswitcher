@@ -65,5 +65,6 @@ namespace FastWindowSwitcherLib
     bool Win32UnregisterHotKey(const quintptr& p_window, const int& p_id);
     quint32 Win32RegisterWindowMessage(QString p_message);
     int Win32GetSystemMetrics(const int& p_index);
+    const QString GetSystemX86Folder();
   };
 };

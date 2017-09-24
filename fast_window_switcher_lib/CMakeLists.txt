@@ -103,6 +103,10 @@ target_compile_options( ${TARGET_NAME} PRIVATE "$<$<CONFIG:DEBUG>:/W4>"  )
 target_compile_options( ${TARGET_NAME} PRIVATE "$<$<CONFIG:RELEASE>:/MT>" )
 target_compile_options( ${TARGET_NAME} PRIVATE "$<$<CONFIG:DEBUG>:/MTd>" )
 
+target_compile_options( ${TARGET_NAME} PRIVATE "/MP")
+target_compile_options( ${TARGET_NAME} PRIVATE "/Zi")
+target_compile_options( ${TARGET_NAME} PRIVATE "/Od")
+target_compile_options( ${TARGET_NAME} PRIVATE "/Ob0")
 
 set(cfgs ${CMAKE_CONFIGURATION_TYPES}) 
 list(REMOVE_ITEM cfgs MinSizeRel)

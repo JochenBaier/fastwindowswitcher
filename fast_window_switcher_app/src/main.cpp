@@ -44,11 +44,12 @@ Programm erhalten haben.Wenn nicht, siehe < http://www.gnu.org/licenses/>.
 #include <RunGuard.hpp>
 #include "SessionManager.hpp"
 #include "SettingsFunctions.hpp"
+#include "MiniDumpFunctions.hpp"
 
 #include <QtCore/QtPlugin>
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
 
-int main(int argc, char *argv[])
+int main_internal(int argc, char ** argv)
 {
   HRESULT res = CoInitialize(nullptr);
   Q_ASSERT(res == S_OK);
@@ -58,6 +59,7 @@ int main(int argc, char *argv[])
   app.setApplicationName("FastWindowSwitcher");
   app.setOrganizationName("Jochen Baier");
   app.setApplicationVersion(QT_VERSION_STR);
+  app.setStyleSheet("QMessageBox { messagebox-text-interaction-flags: 5; }");
 
 
   //Allow only single instance
@@ -82,6 +84,35 @@ int main(int argc, char *argv[])
   sessionManager.ReCreateSession();
 
   int exitCode = app.exec();
+
   CoUninitialize();
+
   return exitCode;
+}
+
+//Global unhandled exeption filter
+LONG WINAPI MyUnhandledExceptionFilter(PEXCEPTION_POINTERS p_exceptionPtrs)
+{
+   //Create a mini dump on crash
+   return FastWindowSwitcher::MiniDumpFunctions::UnhandledExeptionFilterFunction(p_exceptionPtrs);
+}
+
+int main(int argc, char *argv[])
+{
+  //Global unhandled exeption filter
+  SetUnhandledExceptionFilter(MyUnhandledExceptionFilter);
+
+#if defined(_DEBUG)
+  __try
+  {
+#endif
+    return main_internal(argc, argv);
+#if defined(_DEBUG)
+  }
+  __except (FastWindowSwitcher::MiniDumpFunctions::UnhandledExeptionFilterFunction(GetExceptionInformation()))
+  {
+      ExitProcess(1);
+  }
+#endif
+
 }

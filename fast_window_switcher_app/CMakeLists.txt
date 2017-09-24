@@ -63,6 +63,8 @@ ${SOURCE_DIR}/XmlFunctions.hpp
 ${SOURCE_DIR}/SettingsDialog.ui
 ${SOURCE_DIR}/HotKeyFunctions.cpp 
 ${SOURCE_DIR}/HotKeyFunctions.hpp 
+${SOURCE_DIR}/MiniDumpFunctions.cpp
+${SOURCE_DIR}/MiniDumpFunctions.hpp
 )
 
 include_directories(${SOURCE_DIR})
@@ -142,6 +144,15 @@ target_compile_options( ${TARGET_NAME} PRIVATE "$<$<CONFIG:DEBUG>:/W4>"  )
 
 target_compile_options( ${TARGET_NAME} PRIVATE "$<$<CONFIG:RELEASE>:/MT>" )
 target_compile_options( ${TARGET_NAME} PRIVATE "$<$<CONFIG:DEBUG>:/MTd>" )
+target_compile_options( ${TARGET_NAME} PRIVATE "/MP")
+
+target_compile_options( ${TARGET_NAME} PRIVATE "/Zi")
+target_compile_options( ${TARGET_NAME} PRIVATE "/Od")
+target_compile_options( ${TARGET_NAME} PRIVATE "/Ob0")
+
+#from  https://msdn.microsoft.com/en-us/library/windows/desktop/ee416349(v=vs.85).aspx
+set_target_properties( ${TARGET_NAME} PROPERTIES LINK_FLAGS_RELEASE "/DEBUG /OPT:REF /OPT:ICF" )
+
 
 set(cfgs ${CMAKE_CONFIGURATION_TYPES}) 
 list(REMOVE_ITEM cfgs MinSizeRel)
