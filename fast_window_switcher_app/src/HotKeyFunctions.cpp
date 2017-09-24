@@ -259,7 +259,7 @@ namespace FastWindowSwitcher
 
     int GetHotKeyKeyIndex(const int& p_virtualKeyCode)
     {
-      for (int i = 0; i < g_hotKeyKeys.size(); i++)
+      for (size_t i = 0; i < g_hotKeyKeys.size(); i++)
       {
         if (p_virtualKeyCode == g_hotKeyKeys[i].VkKeyCode)
         {
@@ -272,7 +272,7 @@ namespace FastWindowSwitcher
 
     int GetHotKeyModifierIndex(const int& p_modifierKeyCode)
     {
-      for (int i = 0; i < g_hotKeyModifiers.size(); i++)
+      for (size_t i = 0; i < g_hotKeyModifiers.size(); i++)
       {
         if (p_modifierKeyCode == g_hotKeyModifiers[i].VkKeyCode)
         {

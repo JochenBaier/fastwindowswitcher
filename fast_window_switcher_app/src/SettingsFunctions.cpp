@@ -66,24 +66,29 @@ namespace FastWindowSwitcher
     const int g_MOD_WIN = 0x0008;
 
     //Get settings with fallback
-    PersistenSettings ReadPersistenSettingsWithDefaultFallback(const QString& p_filenname, bool& p_fallBackUsed)
+    PersistenSettings ReadPersistenSettingsWithDefaultFallback(const QString& p_filenname)
     {
       Q_ASSERT(!p_filenname.isEmpty());
 
-      QString fileContent;
+      //If no settings file exits default values will be used. Settings file be be created on first change
+      QFile file(p_filenname);
+      if (!file.exists())
       {
-        QFile file(p_filenname);
-        if (!file.open(QFile::ReadOnly | QFile::Text))
-        {
-          p_fallBackUsed = true;
-          return PersistenSettings(g_hotKeyMotifierKeyCode, g_hotKeyKeyCode, g_defaultMarkerFont, g_defaultMarkerFontSize);
-        }
-
-        QTextStream in(&file);
-        fileContent = in.readAll();
-        Q_ASSERT(!fileContent.isEmpty());
+        return PersistenSettings(g_hotKeyMotifierKeyCode, g_hotKeyKeyCode, g_defaultMarkerFont, g_defaultMarkerFontSize);
       }
 
+      if (!file.open(QFile::ReadOnly | QFile::Text))
+      {
+        Q_ASSERT(false);
+        return PersistenSettings(g_hotKeyMotifierKeyCode, g_hotKeyKeyCode, g_defaultMarkerFont, g_defaultMarkerFontSize);
+      }
+
+      QString fileContent;
+
+      QTextStream in(&file);
+      fileContent = in.readAll();
+      Q_ASSERT(!fileContent.isEmpty());
+            
       int hotKeyMotifierKeyCode = XmlFunctions::ReadInt(fileContent, "fastwindowswitcher/general/hotkey/motifier_key_code_hex/text()", 16, g_hotKeyMotifierKeyCode);
       int hotKeyKeyCode = XmlFunctions::ReadInt(fileContent, "fastwindowswitcher/general/hotkey/key_code_hex/text()", 16, g_hotKeyKeyCode);
 
@@ -135,7 +140,7 @@ namespace FastWindowSwitcher
       ui.setupUi(settingsDialog);
 
       settingsDialog->setWindowFlags(settingsDialog->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-                  
+
       const std::vector<HotKeyFunctions::Mapping> mappings = HotKeyFunctions::GetModfierMappings();
       for (const HotKeyFunctions::Mapping& mapping : mappings)
       {

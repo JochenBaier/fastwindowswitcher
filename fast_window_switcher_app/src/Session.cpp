@@ -56,15 +56,16 @@ namespace FastWindowSwitcher
     //Layer between FastWindowSwitcher and Windows API functions. Enables independent testing of the FastWindowSwitcher functions
     m_desktopAbstraction = std::make_unique<FastWindowSwitcherLib::DesktopAbstraction>(p_uiAutomation, QFontMetrics(QFont(p_persistentSettings.GetMarkerFontName(), p_persistentSettings.GetMarkerFontSize())));
 
-    //List of (system) windows which do not get markers
-    QList<quintptr> windowBlackList = m_desktopAbstraction->GetBlackListetWindows();
-
     //Get infos of available monitors
     std::vector<FastWindowSwitcherLib::MonitorInfo> monitors = m_desktopAbstraction->GetMonitorInfos();
     Q_ASSERT(monitors.size() > 0);
 
+    //List of (system) windows which do not get markers
+    QList<quintptr> windowBlackList = m_desktopAbstraction->GetBlackListetWindows(monitors);
+   
+
     //The FastWindowSwitcher class core of the application. It will receive the hotkey event and starts the marker modus
-    m_fastWindowSwitcher = std::make_unique<FastWindowSwitcherLib::FastWindowSwitcher>(*m_desktopAbstraction.get(), m_elementRepository,
+    m_fastWindowSwitcher = std::make_unique<FastWindowSwitcherLib::FastWindowSwitcher>(*m_desktopAbstraction, m_elementRepository,
       monitors, windowBlackList);
 
     //Create transparent windows which paints the markers

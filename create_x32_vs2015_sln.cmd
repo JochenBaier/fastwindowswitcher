@@ -12,11 +12,9 @@ pushd "%current_dir%"
 
 rmdir "%build_dir%" /Q /S 2>nul
 mkdir "%build_dir%"
-
 cd "%build_dir%"
 
-
-"C:\Program Files\CMake\bin\cmake.exe" .. -G"Visual Studio 14 2015" -DCMAKE_PREFIX_PATH=E:\Entwicklung\qt\qt59_vs2015_static
+"C:\Program Files (x86)\CMake\bin\cmake.exe" .. -G"Visual Studio 15 2017"  -T v140 -DCMAKE_PREFIX_PATH=E:\Entwicklung\qt\qt59_vs2015_static
 if %errorlevel% NEQ 0 (
   rmdir %build_dir%
   GOTO :EXIT

@@ -105,7 +105,7 @@ namespace FastWindowSwitcher
 
   void HiddenEventWindow::BringToTop()
   {
-    const bool ok = FastWindowSwitcherLib::WinApiFunctions::Win32SetForegroundWindow(winId());
+	FastWindowSwitcherLib::WinApiFunctions::Win32SetForegroundWindow(winId());
   }
 
   void HiddenEventWindow::keyPressEvent(QKeyEvent* p_event)

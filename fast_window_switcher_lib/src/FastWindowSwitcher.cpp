@@ -126,7 +126,7 @@ namespace FastWindowSwitcherLib
 
     bool updateNeeded = false;
 
-    m_desktopAbstraction.UpdateElements(m_elementRespository, m_windowBlackList, m_monitors, updateNeeded);
+    m_desktopAbstraction.UpdateElements(m_elementRespository, m_monitors, updateNeeded);
     if (updateNeeded)
     {
       EmitMarkersChanged();

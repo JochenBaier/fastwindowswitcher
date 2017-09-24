@@ -51,7 +51,7 @@ namespace FastWindowSwitcherLib
 
   namespace SelectableWindowFunctions
   {
-    void UpdateSelectableWindow(SelectableWindow& p_selectableWindow, const QFontMetrics& p_fontMectrics, const QList<quintptr>& p_windowBlackList, const std::vector<MonitorInfo>& p_monitors, bool& p_updateNeeded);
+    void UpdateSelectableWindow(SelectableWindow& p_selectableWindow, const QFontMetrics& p_fontMectrics, const std::vector<MonitorInfo>& p_monitors, bool& p_updateNeeded);
     void GetSelectableWindows(const QFontMetrics& p_fontMectrics, const QList<quintptr>& p_windowBlackList, const std::vector<MonitorInfo>& p_monitors, int& p_key_combination_letter_pos, std::vector<SelectableElementPtr>& p_selectaleElements);
     void Invoke(const SelectableWindow& p_selectableWindow);
   };

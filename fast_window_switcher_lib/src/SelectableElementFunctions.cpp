@@ -45,11 +45,11 @@ namespace FastWindowSwitcherLib
   //Functions related to desktop elements (Windows, panel elements) which could be selected
   namespace SelectableElementFunctions
   {
-    void Update(SelectableElement& p_selectableElement, const QFontMetrics& p_fontMectrics, const QList<quintptr>& p_windowBlackList, const std::vector<MonitorInfo>& p_monitors, bool& p_updateNedded)
+    void Update(SelectableElement& p_selectableElement, const QFontMetrics& p_fontMectrics, const std::vector<MonitorInfo>& p_monitors, bool& p_updateNedded)
     {
       switch (p_selectableElement.GetType())
       {
-        case SelectableElementType::SelectableWindow: SelectableWindowFunctions::UpdateSelectableWindow((SelectableWindow&)p_selectableElement, p_fontMectrics, p_windowBlackList, p_monitors, p_updateNedded); break;
+        case SelectableElementType::SelectableWindow: SelectableWindowFunctions::UpdateSelectableWindow((SelectableWindow&)p_selectableElement, p_fontMectrics, p_monitors, p_updateNedded); break;
         case SelectableElementType::SelectablePanelElement: SelectablePanelElementFunctions::UpdateSelectablePanelElement((SelectablePanelElement&)p_selectableElement, p_updateNedded); break;
       }
     }

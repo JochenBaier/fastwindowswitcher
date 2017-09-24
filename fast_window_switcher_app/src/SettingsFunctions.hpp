@@ -41,7 +41,7 @@ namespace FastWindowSwitcher
 {
   namespace SettingsFunctions
   {
-    PersistenSettings ReadPersistenSettingsWithDefaultFallback(const QString& p_filenname, bool& p_fallBackUsed);
+    PersistenSettings ReadPersistenSettingsWithDefaultFallback(const QString& p_filenname);
     bool ShowSettingsDialog(const QString& p_settingsFile, const PersistenSettings& p_persistenSettings);
   };
 };

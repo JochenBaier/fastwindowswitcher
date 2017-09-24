@@ -92,13 +92,8 @@ namespace FastWindowSwitcher
 
     //try to find a settings file 'FastWindowSwitcher.xml' inside the application folder
     //Read settings from 'FastWindowSwitcher.xml'
-    bool settingsFallbackUsed = false;
-    m_persistentSettings = SettingsFunctions::ReadPersistenSettingsWithDefaultFallback(m_settingsFile, settingsFallbackUsed);
-    if (settingsFallbackUsed)
-    {
-      QMessageBox::warning(nullptr, QApplication::applicationName(), QString("No settings file '%1' found. Application will use default values. Please set your activation hotkey in the settings dialog (Trayicon)").arg(m_settingsFile));
-    }
-
+	  m_persistentSettings = SettingsFunctions::ReadPersistenSettingsWithDefaultFallback(m_settingsFile);
+    
     if (m_hiddenEventWindow)
     {
       UnRegisterGlobalHotkey(m_hiddenEventWindow->winId());
