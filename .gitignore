@@ -10,7 +10,6 @@ moc_*.cpp
 *.class
 *.so
 *.exp
-*.pdb
 *.ilk
 *.sdf
 bin/
