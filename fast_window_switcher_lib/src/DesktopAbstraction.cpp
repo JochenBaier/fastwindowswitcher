@@ -24,7 +24,7 @@ namespace FastWindowSwitcherLib
   }
 
   //Returns list of window which should not get markers
-  QList<quintptr> DesktopAbstraction::GetBlackListetWindows()
+  QList<quintptr> DesktopAbstraction::GetBlackListetWindows(const std::vector<FastWindowSwitcherLib::MonitorInfo>& p_monitorInfos)
   {
     QList<quintptr> blackListetWindows;
 
@@ -41,7 +41,19 @@ namespace FastWindowSwitcherLib
     if (startButtonWindow) { blackListetWindows.push_back(startButtonWindow); }
     if (startMenuWindow) { blackListetWindows.push_back(startMenuWindow); }
     if (desktopUserPicture) { blackListetWindows.push_back(desktopUserPicture); }
+    
+    for (const FastWindowSwitcherLib::MonitorInfo& monitorInfo : p_monitorInfos)
+    {
+      if (!monitorInfo.HasPanel())
+      {
+        continue;
+      }
 
+      quintptr panel_window = monitorInfo.GetPanel()->GetWindowHandle();
+      blackListetWindows.push_back(panel_window);
+
+    }
+    
     return blackListetWindows;
   }
 
@@ -71,13 +83,13 @@ namespace FastWindowSwitcherLib
   }
 
   //Updates elements which are currently shown (position, still available)
-  void DesktopAbstraction::UpdateElements(SelectableElementRepository& p_selectableElementRepository, const QList<quintptr>& p_windowBlackList, const std::vector<MonitorInfo>& p_monitors, bool& p_updateNedded)
+  void DesktopAbstraction::UpdateElements(SelectableElementRepository& p_selectableElementRepository, const std::vector<MonitorInfo>& p_monitors, bool& p_updateNedded)
   {
     for (std::size_t i = 0; i < p_selectableElementRepository.Count(); i++)
     {
       SelectableElement& selectableElement = p_selectableElementRepository.GetElement(i);
       bool windowsNeedsUpdate = false;
-      SelectableElementFunctions::Update(selectableElement, m_fontMetrics, p_windowBlackList, p_monitors, windowsNeedsUpdate);
+      SelectableElementFunctions::Update(selectableElement, m_fontMetrics, p_monitors, windowsNeedsUpdate);
       p_updateNedded |= windowsNeedsUpdate;
     }
   }

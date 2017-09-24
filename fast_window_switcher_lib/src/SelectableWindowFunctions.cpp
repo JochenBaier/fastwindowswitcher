@@ -49,7 +49,7 @@ namespace FastWindowSwitcherLib
   namespace SelectableWindowFunctions
   {
     //Update infos for currently visable window elements
-    void UpdateSelectableWindow(SelectableWindow& p_selectableWindow, const QFontMetrics& p_fontMectrics, const QList<quintptr>& p_windowBlackList, const std::vector<MonitorInfo>& p_monitors, bool& p_updateNeeded)
+    void UpdateSelectableWindow(SelectableWindow& p_selectableWindow, const QFontMetrics& p_fontMectrics, const std::vector<MonitorInfo>& p_monitors, bool& p_updateNeeded)
     {
       p_updateNeeded = false;
 
@@ -132,20 +132,19 @@ namespace FastWindowSwitcherLib
 
       for (const quintptr& window : topLevelWindows)
       {
-        const QString key_combination = MarkerFunctions::GetKeyCombination(++p_key_combination_letter_pos);
-
-        QRect window_rect = WinApiFunctions::Win32GetWindowRectangle(window);
+        const QRect window_rect = WinApiFunctions::Win32GetWindowRectangle(window);
         if (window_rect.width() == 0 || window_rect.height() == 0)
         {
           continue;
         }
-
-
-        std::size_t monitorThisWindowBelongsTo = WinApiFunctions::GetWindowMonitorIndex(window);
+                        
+        const std::size_t monitorThisWindowBelongsTo = WinApiFunctions::GetWindowMonitorIndex(window);
         Q_ASSERT(monitorThisWindowBelongsTo < p_monitors.size());
 
+        const QString key_combination = MarkerFunctions::GetKeyCombination(++p_key_combination_letter_pos);
+
         QList<QRect> visible_text_positions = MarkerFunctions::FindVisibleMarkerPositions(p_fontMectrics, window, p_monitors.at(monitorThisWindowBelongsTo), window_rect, key_combination);
-        if (visible_text_positions.size() == 0)
+        if (visible_text_positions.empty())
         {
           --p_key_combination_letter_pos;
           continue;
