@@ -31,6 +31,12 @@ namespace FastWindowSwitcher
         return p_defaultValue;
       }
 
+      //Bug? http://www.qtcentre.org/threads/42338-QXmlQuery-evaluateTo(QString)-adds-a-line-break
+      if (value.endsWith('\n'))
+      {
+        value.chop(1);
+      }
+
       return value;
     }
 
