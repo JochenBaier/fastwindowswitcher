@@ -43,7 +43,6 @@ Programm erhalten haben.Wenn nicht, siehe < http://www.gnu.org/licenses/>.
 
 #include "UIAutomationFunctions.hpp"
 #include "PersistentSettings.hpp"
-#include "SettingsFunctions.hpp"
 #include "DesktopAbstraction.hpp"
 #include "HiddenEventWindow.hpp"
 

@@ -42,8 +42,8 @@ namespace FastWindowSwitcher
   {
   public:
 
-    PersistenSettings(const int& p_hotKeyMotifierKeyCode, const int& p_hotKeyKeyCode, const QString& p_markerFontName, const int& p_markerFontSize) :
-      m_hotKeyMotifierKeyCode(p_hotKeyMotifierKeyCode), m_hotKeyKeyCode(p_hotKeyKeyCode), m_markerFontName(p_markerFontName), m_markerFontSize(p_markerFontSize)
+    PersistenSettings(const int& p_hotKeyMotifierKeyCode, const int& p_hotKeyKeyCode, const QString& p_markerFontName, const int& p_markerFontSize, const bool& p_firstRun):
+      m_hotKeyMotifierKeyCode(p_hotKeyMotifierKeyCode), m_hotKeyKeyCode(p_hotKeyKeyCode), m_markerFontName(p_markerFontName), m_markerFontSize(p_markerFontSize), m_firstRun(p_firstRun)
     {
     }
 
@@ -51,11 +51,17 @@ namespace FastWindowSwitcher
     int GetHotKeyKeyCode() const { return m_hotKeyKeyCode; }
     QString GetMarkerFontName() const { return m_markerFontName; }
     int GetMarkerFontSize() const { return m_markerFontSize; }
+    bool GetFirstRun() const { return m_firstRun; }
+    void SetFirstRun(const bool& p_value)
+    {
+      m_firstRun = p_value;
+    }
 
   private:
     int m_hotKeyMotifierKeyCode;
     int m_hotKeyKeyCode;
     QString m_markerFontName;
     int m_markerFontSize;
+    bool m_firstRun;
   };
 };
