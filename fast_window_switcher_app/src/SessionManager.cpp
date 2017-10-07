@@ -36,19 +36,23 @@ Programm erhalten haben.Wenn nicht, siehe < http://www.gnu.org/licenses/>.
 #include <QTimer>
 #include <QApplication>
 #include <QMessageBox>
+#include "QFileInfo"
 
 #include "SessionManager.hpp"
-#include "SettingsFunctions.hpp"
+#include "PersistentSettingsFunctions.hpp"
 #include "UIAutomationFunctions.hpp"
 #include "WinApiFunctions.hpp"
 #include "HotKeyFunctions.hpp"
+#include "WelcomeDialogFunctions.hpp"
+#include "SettingsWindow.hpp"
+
 
 namespace FastWindowSwitcher
 {
   //Manages the lifetime of a session
   SessionManager::SessionManager() :
     m_recreateTimer(new QTimer(this)),
-    m_persistentSettings(MOD_WIN, 0x59, "Consolas", 14),
+    m_persistentSettings(MOD_WIN, 0x59, "Consolas", 14, true),
     m_settingsFile(QApplication::applicationDirPath() + "/" + QCoreApplication::applicationName() + ".xml")
   {
     m_recreateTimer->setSingleShot(true);
@@ -76,7 +80,26 @@ namespace FastWindowSwitcher
     FastWindowSwitcherLib::WinApiFunctions::Win32UnregisterHotKey(p_window, 0);
   }
 
-  //Create a new session if monitor or panel setup changedy
+  //Create session on program start. Create settings file if it do not exists
+  void SessionManager::CreateFirstSession()
+  {
+    //Create settings file if it does not exists
+    QFile file(m_settingsFile);
+    if (!file.exists())
+    {
+      //Write settings file with default values because its missing
+      QString errorText = "";
+      bool writeOk = PersistenSettingsFunctions::WritePersistenSettings(m_settingsFile, m_persistentSettings, errorText);
+      if (!writeOk)
+      {
+        QMessageBox::critical(nullptr, QApplication::applicationName(), QString("Could not create default settings file! Reason:\n\n '%1'\n\nPlease make sure that the folder '%2' is writable.").arg(errorText).arg(QApplication::applicationDirPath()));
+      }
+    }
+
+    ReCreateSession();
+  }
+
+  //Create a  if monitor or panel setup changed
   void SessionManager::ReCreateSession()
   {
     IUIAutomation* uiAutomation = nullptr;
@@ -92,8 +115,21 @@ namespace FastWindowSwitcher
 
     //try to find a settings file 'FastWindowSwitcher.xml' inside the application folder
     //Read settings from 'FastWindowSwitcher.xml'
-	  m_persistentSettings = SettingsFunctions::ReadPersistenSettingsWithDefaultFallback(m_settingsFile);
-    
+    m_persistentSettings = PersistenSettingsFunctions::ReadPersistenSettingsWithDefaultFallback(m_settingsFile);
+    if (m_persistentSettings.GetFirstRun())
+    {
+      m_persistentSettings.SetFirstRun(false);
+
+      WelcomeDialogFunctions::ShowWelcomeDialog();
+
+      QString errorText = "";
+      bool writeOk = PersistenSettingsFunctions::WritePersistenSettings(m_settingsFile, m_persistentSettings, errorText);
+      if (!writeOk)
+      {
+        QMessageBox::critical(nullptr, QApplication::applicationName(), QString("Writing settings not possible (first_run to '0')! Reason:\n\n '%1'\n\nPlease make sure that the file '%2' is writable.").arg(errorText).arg(m_settingsFile));
+      }
+    }
+
     if (m_hiddenEventWindow)
     {
       UnRegisterGlobalHotkey(m_hiddenEventWindow->winId());
@@ -104,20 +140,13 @@ namespace FastWindowSwitcher
     m_hiddenEventWindow = std::make_unique<HiddenEventWindow>();
     Q_ASSERT(m_hiddenEventWindow->winId());
 
-    const bool registerOk = RegisterGlobalHotkey(m_hiddenEventWindow->winId(), m_persistentSettings.GetHotKeyMotifierKeyCode(), m_persistentSettings.GetHotKeyKeyCode());
-    if (!registerOk)
-    {
-      QString hotKeyModifier = HotKeyFunctions::GetHotKeyModfierAsString(m_persistentSettings.GetHotKeyMotifierKeyCode());
-      QString hotKeyKey = HotKeyFunctions::GetHotKeyKeyAsString(m_persistentSettings.GetHotKeyKeyCode());
-
-      QMessageBox::warning(nullptr, QCoreApplication::applicationName(), QString("Can not register hotkey '%1-%2' ! Please change in settings.").arg(hotKeyModifier, hotKeyKey));
-    }
+    RegisterGlobalHotkeyDisplayWarningOnError();
 
     //Create a new session
     m_session.reset();
     m_session = std::make_unique<Session>(*m_hiddenEventWindow, m_persistentSettings, *uiAutomation);
 
-    //Connect to ExplorerRestarted to recreate the session if explorer.exe process is restared
+    //Connect to ExplorerRestarted to recreate the session if explorer.exe process is restarted
     QObject::connect(m_hiddenEventWindow.get(), &FastWindowSwitcher::HiddenEventWindow::ExplorerRestarted, this, &FastWindowSwitcher::SessionManager::ReCreateSessionDelayed, Qt::DirectConnection);
 
 
@@ -130,13 +159,45 @@ namespace FastWindowSwitcher
     m_trayIcon->Show();
   }
 
+  //Try to register label hotkey
+  void SessionManager::RegisterGlobalHotkeyDisplayWarningOnError()
+  {
+    const bool registerOk = RegisterGlobalHotkey(m_hiddenEventWindow->winId(), m_persistentSettings.GetHotKeyMotifierKeyCode(), m_persistentSettings.GetHotKeyKeyCode());
+    if (!registerOk)
+    {
+      QString hotKeyModifier = HotKeyFunctions::GetHotKeyModfierAsString(m_persistentSettings.GetHotKeyMotifierKeyCode());
+      QString hotKeyKey = HotKeyFunctions::GetHotKeyKeyAsString(m_persistentSettings.GetHotKeyKeyCode());
+
+      QMessageBox::warning(nullptr, QCoreApplication::applicationName(), QString("Can not register hotkey '%1-%2'! Please change in settings.").arg(hotKeyModifier, hotKeyKey));
+    }
+  }
+
+  //Display window with all settings
   void SessionManager::ShowSettingsDialog()
   {
-    bool changed = SettingsFunctions::ShowSettingsDialog(m_settingsFile, m_persistentSettings);
-    if (changed)
+    if (m_settingsWindowIsOpen)
+    {
+      return;
+    }
+
+    //will be auto deleted on dialog close
+    SettingsWindow* m_settingsWindow = new SettingsWindow(m_persistentSettings, m_settingsFile);
+
+    QObject::connect(m_settingsWindow, &SettingsWindow::SettingsChanged, [this]()
     {
       QTimer::singleShot(0, this, &SessionManager::ReCreateSession);
-    }
+    });
+
+
+    QObject::connect(m_settingsWindow, &SettingsWindow::destroyed, [this]()
+    {
+      m_settingsWindowIsOpen = false;
+    });
+    
+    m_settingsWindow->show();
+    m_settingsWindow->raise();
+
+    m_settingsWindowIsOpen = true;
   }
 
   //Shutdown session on application exit, Windows logout, Windows shutdown
@@ -147,6 +208,9 @@ namespace FastWindowSwitcher
       UnRegisterGlobalHotkey(m_hiddenEventWindow->winId());
       m_hiddenEventWindow.reset();
     }
+
+    //For example settings window
+    QApplication::closeAllWindows();
 
     m_session.reset();
   }

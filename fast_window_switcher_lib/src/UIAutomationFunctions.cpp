@@ -78,7 +78,7 @@ namespace FastWindowSwitcherLib
       HRESULT hr = p_element.GetCurrentPattern(UIA_InvokePatternId, &iUnknownInterface);
       if (hr != S_OK)
       {
-        //FIXME inform user
+        //FIXME inform user (via shaking?)
         Q_ASSERT(false);
         return;
       }

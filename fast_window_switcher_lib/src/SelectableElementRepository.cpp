@@ -62,7 +62,7 @@ namespace FastWindowSwitcherLib
   }
 
   //Get single element by const reference
-  const SelectableElement& SelectableElementRepository::GetElement(const std::size_t& p_index) const
+  const SelectableElement& SelectableElementRepository::GetElement(const std::size_t& p_index) const //-V659
   {
     Q_ASSERT(p_index < m_elements.size());
     return *m_elements.at(p_index);

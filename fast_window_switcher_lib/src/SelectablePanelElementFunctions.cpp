@@ -70,7 +70,6 @@ namespace FastWindowSwitcherLib
 
         if (panel.GetQuickLaunchWindowHandle())
         {
-          //FIXME use smaller markers for quick launch area
           UIElementPtr quickLaunchElement = UIAutomationFunctions::GetElementFromHandle(p_ui_automation, panel.GetQuickLaunchWindowHandle());
           if (quickLaunchElement)
           {

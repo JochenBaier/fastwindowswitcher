@@ -40,6 +40,7 @@ Programm erhalten haben.Wenn nicht, siehe < http://www.gnu.org/licenses/>.
 #include "HiddenEventWindow.hpp"
 #include "TrayIcon.hpp"
 #include "PersistentSettings.hpp"
+#include "SettingsWindow.hpp"
 
 class QTimer;
 
@@ -52,20 +53,23 @@ namespace FastWindowSwitcher
   public:
     explicit SessionManager();
     void ReCreateSession();
+    void CreateFirstSession();
 
     Q_SLOT void ReCreateSessionDelayed();
     Q_SLOT void Shutdown();
 
   private:
-
     Q_SLOT void ShowSettingsDialog();
-
+    void RegisterGlobalHotkeyDisplayWarningOnError();
+    
     PersistenSettings m_persistentSettings;
     QString m_settingsFile;
     HiddenEventWindowPtr m_hiddenEventWindow;
     QTimer* m_recreateTimer;
     SessionPtr m_session;
     TrayIconPtr m_trayIcon;
+    bool m_settingsWindowIsOpen = false;
+   
   };
 
 };
