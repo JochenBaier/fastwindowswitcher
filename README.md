@@ -1,8 +1,6 @@
-
-
 # FastWindowSwitcher
 
-A fast window switcher for Windows using the keyboard.
+A fast window switcher for Windows using labeled windows.
 
 FastWindowSwitcher is a window switcher/task switcher for Windows 7 and Windows 10.
 It is optimized for fast keyboard usage and can be used as an alternative for  ALT-TAB.
@@ -16,9 +14,22 @@ It is optimized for fast keyboard usage and can be used as an alternative for  A
 
 ![FastWindowSwitcherExample Animation](https://github.com/JochenBaier/fastwindowswitcher/blob/master/homepage/fws_example_animation.gif)
 
+## Features
+
+- Window switching with labels (keys)
+- No more Alt-Tabbing through a lot of open windows
+- Access every window via 'Shortcut + Key' no matter how many windows are open
+- Last used windows will be labeled with easy to press keys from the middle of the keyboard ('f','j',...)
+- Optimized for key board usage
+- Multi monitor support
+- Support for second panel under Windows 7 via [Dual Monitor Taskbar](https://sourceforge.net/projects/dualmonitortb/)
+- Works with Windows 7 and Windows 10
+- Portable: no installation needed, no changes to the system, no dependencies
+- Sourcecode check with static code analysis: PVS Studio, Cppcheck, VS Studio Code Analysis
+
 ## Download
 
-[Current Version 0.1.1.0](https://github.com/JochenBaier/fastwindowswitcher/releases/download/v0.1.1.0/FastWindowSwitcher-0110.zip)
+[Current Version 0.2.0.0](https://github.com/JochenBaier/fastwindowswitcher/releases/download/v0.2.0.0/FastWindowSwitcher-0200.zip)
 
 ## Installation
 
@@ -31,7 +42,7 @@ The default hotkey to show the labels is Win-Y (optimized for a German keyboard 
 
 - For easy access of the taskbar buttons the taskbutton grouping should be turned off in the Window panel settings.
 - It is not possible to click the labels with the mouse. FastWindowSwitcher is keyboard only.
-- If you want to start FastWindowSwichter with Windows create an shortcut to FastWindowSwitcher.exe inside the Windows Autostart folder
+- If you want to start FastWindowSwitcher with Windows create a shortcut to FastWindowSwitcher.exe inside the Windows Autostart folder
 
 ## License
 
@@ -40,6 +51,10 @@ FastWindowSwitcher is released under the [GNU General Public License 3](https://
 ## Changelog
 
 [Changelog.md](https://github.com/JochenBaier/fastwindowswitcher/blob/master/Changelog.md)
+
+## Contact
+
+[Jochen Baier](mailto:email@jochen-baier.de)
 
 ## Background/Similar programs
 
@@ -52,6 +67,8 @@ FastWindowSwitcher is based on the idea of [vimfx](https://addons.mozilla.org/de
 - gotowebsites.info: http://www.gotowebsites.info/2017/09/fastwindowswitcher-tool-will-find-solution-windows-using-the-keyboard/
 - technewsdir.com: http://technewsdir.com/fastwindowswitcher-alt-tab-alternative-for-windows
 - Video (Breaking News 24/7): https://www.youtube.com/watch?v=5JTtnbjOaeM
+- trishtech.com: http://www.trishtech.com/2017/09/fastwindowswitcher-quickly-switch-to-any-open-window/
+- windowsreport.com: http://windowsreport.com/alt-tab-alternatives/
 
 ## Reviews in german
 
