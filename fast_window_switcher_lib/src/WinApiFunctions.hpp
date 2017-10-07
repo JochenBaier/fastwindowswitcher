@@ -66,5 +66,7 @@ namespace FastWindowSwitcherLib
     quint32 Win32RegisterWindowMessage(QString p_message);
     int Win32GetSystemMetrics(const int& p_index);
     const QString GetSystemX86Folder();
+    void Win32GetFileVersion(const QString& p_file, int& p_major, int& p_minor, int& p_build, int& p_revision);
+    QString Win32GetFileVersionAsString();
   };
 };

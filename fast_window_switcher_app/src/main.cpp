@@ -39,36 +39,38 @@ Programm erhalten haben.Wenn nicht, siehe < http://www.gnu.org/licenses/>.
 #include <QDesktopWidget>
 #include <QWindow>
 #include <QMessageBox>
-
+#include <QtCore/QtPlugin>
 
 #include <RunGuard.hpp>
 #include "SessionManager.hpp"
-#include "SettingsFunctions.hpp"
 #include "MiniDumpFunctions.hpp"
+#include "WinApiFunctions.hpp"
 
-#include <QtCore/QtPlugin>
+
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
 
 int main_internal(int argc, char ** argv)
 {
   HRESULT res = CoInitialize(nullptr);
   Q_ASSERT(res == S_OK);
-
+    
   QApplication app(argc, argv);
   app.setQuitOnLastWindowClosed(false);
   app.setApplicationName("FastWindowSwitcher");
   app.setOrganizationName("Jochen Baier");
-  app.setApplicationVersion(QT_VERSION_STR);
+  app.setApplicationVersion(FastWindowSwitcherLib::WinApiFunctions::Win32GetFileVersionAsString());
   app.setStyleSheet("QMessageBox { messagebox-text-interaction-flags: 5; }");
+  
 
-
+#if !defined(_DEBUG)
   //Allow only single instance
   FastWindowSwitcher::RunGuard guard(QCoreApplication::applicationName());
   if (!guard.TryToRun())
   {
-    QMessageBox::critical(nullptr, QCoreApplication::applicationName(), "Programm already running.");
+    QMessageBox::critical(nullptr, QCoreApplication::applicationName(), "Program already running.");
     return 1;
   }
+#endif
 
   FastWindowSwitcher::SessionManager sessionManager;
 
@@ -81,8 +83,8 @@ int main_internal(int argc, char ** argv)
   //Shutdown session before Windows Log out or Windows shutdown to avoid blocking
   QObject::connect(&app, &QApplication::aboutToQuit, &sessionManager, &FastWindowSwitcher::SessionManager::Shutdown, Qt::DirectConnection);
 
-  sessionManager.ReCreateSession();
-
+  sessionManager.CreateFirstSession();
+ 
   int exitCode = app.exec();
 
   CoUninitialize();

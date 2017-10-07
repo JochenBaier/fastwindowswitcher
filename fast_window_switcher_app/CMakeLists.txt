@@ -55,16 +55,21 @@ ${SOURCE_DIR}/Session.cpp
 ${SOURCE_DIR}/SessionManager.hpp
 ${SOURCE_DIR}/SessionManager.cpp
 ${SOURCE_DIR}/PersistentSettings.hpp
-${SOURCE_DIR}/SettingsFunctions.hpp
-${SOURCE_DIR}/SettingsFunctions.cpp
 ${SOURCE_DIR}/VersionInfo.rc #FIXME use https://stackoverflow.com/questions/6693100/how-to-generate-windows-dll-versioning-information-with-cmake
 ${SOURCE_DIR}/XmlFunctions.cpp
 ${SOURCE_DIR}/XmlFunctions.hpp
-${SOURCE_DIR}/SettingsDialog.ui
 ${SOURCE_DIR}/HotKeyFunctions.cpp 
 ${SOURCE_DIR}/HotKeyFunctions.hpp 
 ${SOURCE_DIR}/MiniDumpFunctions.cpp
 ${SOURCE_DIR}/MiniDumpFunctions.hpp
+${SOURCE_DIR}/WelcomeDialogFunctions.cpp
+${SOURCE_DIR}/WelcomeDialogFunctions.hpp
+${SOURCE_DIR}/SettingsWindow.cpp
+${SOURCE_DIR}/SettingsWindow.hpp
+${SOURCE_DIR}/PersistentSettingsFunctions.cpp
+${SOURCE_DIR}/PersistentSettingsFunctions.hpp
+${SOURCE_DIR}/SettingsDialog.ui
+${SOURCE_DIR}/WelcomeDialog.ui
 )
 
 include_directories(${SOURCE_DIR})

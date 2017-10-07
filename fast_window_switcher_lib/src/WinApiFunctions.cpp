@@ -42,6 +42,8 @@ Programm erhalten haben.Wenn nicht, siehe < http://www.gnu.org/licenses/>.
 #include <QDebug>
 #include <QLibrary>
 #include <QSysInfo>
+#include "QCoreApplication"
+#include "QApplication"
 
 namespace FastWindowSwitcherLib
 {
@@ -289,6 +291,50 @@ namespace FastWindowSwitcherLib
       char system32Path[1024] = { 0 };
       SHGetSpecialFolderPathA(0, system32Path, CSIDL_SYSTEMX86, false);
       return QString(system32Path);
+    }
+
+
+    //from http://amin-ahmadi.com/2015/04/03/get-exe-version-using-windows-api-in-qt/
+    void Win32GetFileVersion(const QString& p_file, int& p_major, int& p_minor, int& p_build, int& p_revision)
+    {
+      Q_ASSERT(!p_file.isEmpty());
+      p_major, p_minor, p_build, p_revision = 0;
+
+      DWORD dwHandle = 0;
+      DWORD dwLen = GetFileVersionInfoSize(qPrintable(p_file), &dwHandle);
+      if (dwLen == 0)
+      {
+        Q_ASSERT(false);
+        return;
+      }
+
+      std::vector<BYTE> lpData(dwLen);
+      if (!GetFileVersionInfoA(qPrintable(p_file), dwHandle, dwLen, lpData.data()))
+      {
+        Q_ASSERT(false);
+        return;
+      }
+
+      // VerQueryValue
+      VS_FIXEDFILEINFO *lpBuffer = NULL;
+      UINT uLen = 0;
+      if (!VerQueryValueA(lpData.data(), "", (LPVOID*)&lpBuffer, &uLen))
+      {
+        Q_ASSERT(false);
+        return;
+      }
+
+      p_major = (lpBuffer->dwFileVersionMS >> 16) & 0xffff;
+      p_minor = (lpBuffer->dwFileVersionMS) & 0xffff;
+      p_build = (lpBuffer->dwFileVersionLS >> 16) & 0xffff;
+      p_revision = (lpBuffer->dwFileVersionLS) & 0xffff;
+    }
+
+    QString Win32GetFileVersionAsString()
+    {
+      int major, minor, build, revision = 0;
+      FastWindowSwitcherLib::WinApiFunctions::Win32GetFileVersion(QApplication::applicationDirPath() + "/" + QApplication::applicationName() + ".exe", major, minor, build, revision);
+      return QString("%1.%2.%3.%4").arg(major).arg(minor).arg(build).arg(revision);
     }
 
   }
