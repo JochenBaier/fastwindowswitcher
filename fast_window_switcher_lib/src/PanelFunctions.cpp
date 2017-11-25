@@ -41,6 +41,7 @@ Programm erhalten haben.Wenn nicht, siehe < http://www.gnu.org/licenses/>.
 #include <QDesktopWidget>
 #include <QList>
 #include <QFontMetrics>
+#include <QMargins>
 
 #include <uiautomation.h>
 
@@ -55,7 +56,7 @@ Programm erhalten haben.Wenn nicht, siehe < http://www.gnu.org/licenses/>.
 
 namespace FastWindowSwitcherLib
 {
-  //Functions releated to the desktop panel (Quick Launch, Taskbar List)
+  //Functions related to the desktop panel (Quick Launch, Taskbar List)
   namespace PanelFunctions
   {
     const int taskBarPadding = 2;
@@ -119,7 +120,13 @@ namespace FastWindowSwitcherLib
           continue;
         }
 
-        const bool taskButtonIsVisible = WindowFunctions::IsRectVisibleToUser(p_panelWindow, nodeRect);
+        QRect nodeRectShrink = nodeRect.marginsRemoved(QMargins(2, 2, 2, 2));
+        if (nodeRectShrink.isEmpty())
+        {
+          continue;
+        }
+
+        const bool taskButtonIsVisible = WindowFunctions::IsRectVisibleToUser(p_panelWindow, nodeRectShrink);
         if (!taskButtonIsVisible)
         {
           continue;
@@ -136,7 +143,7 @@ namespace FastWindowSwitcherLib
           markerWidth = markerHeight = maxSize;
         }
 
-        QRect annotionRect = TaskButtonRecToMarkerRect(taskBarEdge, availableScreenRect, nodeRect.center(), markerWidth, markerHeight);
+        QRect annotionRect =TaskButtonRecToMarkerRect(taskBarEdge, availableScreenRect, nodeRect.center(), markerWidth, markerHeight);
 
         QList<QRect> visible_text_positions;
         visible_text_positions.push_back(annotionRect);
