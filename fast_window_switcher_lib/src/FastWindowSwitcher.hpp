@@ -47,6 +47,8 @@ class QString;
 class QTimer;
 struct IUIAutomation;
 
+#include <QKeyEvent>
+
 namespace FastWindowSwitcherLib
 {
   class FastWindowSwitcher :public QObject

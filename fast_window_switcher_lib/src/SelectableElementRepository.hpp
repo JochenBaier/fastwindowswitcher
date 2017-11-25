@@ -34,8 +34,11 @@ Programm erhalten haben.Wenn nicht, siehe < http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <QList>
+
 #include <memory>
+#include <vector>
+
+#include <QList>
 
 #include "SelectableElementPtr.hpp"
 

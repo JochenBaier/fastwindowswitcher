@@ -91,8 +91,14 @@ include_directories("${CMAKE_PREFIX_PATH}/include/QtCore")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
+find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets  REQUIRED)
+
 add_library( ${TARGET_NAME} STATIC ${SOURCE_FILES} )
+
+
+target_link_libraries(${TARGET_NAME} PRIVATE Qt5::Core)
+target_link_libraries(${TARGET_NAME} PRIVATE Qt5::Widgets)
 
 
 #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /std:c++latest")

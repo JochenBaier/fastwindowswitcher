@@ -79,11 +79,13 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON) 
 set(CMAKE_AUTOUIC ON)
 
+find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5XmlPatterns REQUIRED)
 
 add_executable(${TARGET_NAME} WIN32 ${SOURCE_FILES} )
 
+target_link_libraries(${TARGET_NAME} PRIVATE Qt5::Core)
 target_link_libraries(${TARGET_NAME} PRIVATE Qt5::Widgets)
 target_link_libraries(${TARGET_NAME} PRIVATE Qt5::XmlPatterns)
 
